@@ -88,6 +88,10 @@
             <line>452</line>
         </file>
         <file>
+            <url>src/petrasys/trader/OrderTable1Row.java</url>
+            <line>175</line>
+        </file>
+        <file>
             <url>src/petrasys/trader/TraderFrame.java</url>
             <line>296</line>
             <line>324</line>
@@ -95,10 +99,6 @@
             <line>369</line>
             <line>403</line>
             <line>418</line>
-        </file>
-        <file>
-            <url>src/petrasys/trader/OrderTable1Row.java</url>
-            <line>175</line>
         </file>
         <file>
             <url>src/petrasys/PeTraSysTopFrame1.java</url>

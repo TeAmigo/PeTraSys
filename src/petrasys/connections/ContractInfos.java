@@ -26,8 +26,8 @@ public class ContractInfos extends IBWrapperAdapter implements Runnable {
 
   private MySocket socket;
   private ContractInfoDialog contractInfoDlg;
-  private Statement mySqlStmtForContractDetails;
-  private Connection mySqlConnectionForContractDetails;
+  private Statement pgStmtForContractDetails;
+  private Connection pgConnectionForContractDetails;
   private Contract contract;
   int orderID;
   int contractCount;
@@ -49,8 +49,8 @@ public class ContractInfos extends IBWrapperAdapter implements Runnable {
 
   public void setContractDetailsConnection() {
     try {
-      mySqlConnectionForContractDetails = DBops.setuptradesConnection();
-      mySqlStmtForContractDetails = mySqlConnectionForContractDetails.createStatement();
+      pgConnectionForContractDetails = DBops.setuptradesConnection();
+      pgStmtForContractDetails = pgConnectionForContractDetails.createStatement();
     } catch (SQLException ex) {
       MsgBox.err2(ex);
     }
@@ -68,11 +68,11 @@ public class ContractInfos extends IBWrapperAdapter implements Runnable {
       int priceMag = cds.m_priceMagnifier;
       int expir = Integer.parseInt(ct.m_expiry.trim());
       String insStr = "insert into futuresContractDetails "
-              + "(`symbol`, `expiry`,`multiplier`,`priceMagnifier`, `exchange`,`minTick`,`fullName`)"
+              + "(symbol, expiry,multiplier,priceMagnifier, exchange,minTick,fullName)"
               + " values( '" + ct.m_symbol + "', " + Integer.parseInt(ct.m_expiry.trim())
               + ", " + ct.m_multiplier + ", " + priceMag + ", '" + ct.m_exchange + "', " + cds.m_minTick + ", '"
               + cds.m_longName + "')";
-      mySqlStmtForContractDetails.executeUpdate(insStr);
+      pgStmtForContractDetails.executeUpdate(insStr);
       contractCount++;
     } catch (SQLException ex) {
       MsgBox.err2(ex);
@@ -90,8 +90,8 @@ public class ContractInfos extends IBWrapperAdapter implements Runnable {
     contractInfoDlg.dispose();
     socket.disConnect();
     try {
-      mySqlStmtForContractDetails.close();
-      mySqlConnectionForContractDetails.close();
+      pgStmtForContractDetails.close();
+      pgConnectionForContractDetails.close();
     } catch (SQLException ex) {
       MsgBox.err2(ex);
     }
